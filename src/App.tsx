@@ -286,6 +286,8 @@ export function App() {
   );
   const activeBoard = workspace.boards.find((board) => board.id === workspace.activeBoardId) ?? workspace.boards[0];
   const board = activeBoard.columns;
+  const totalTasks = columns.reduce((count, column) => count + board[column.id].length, 0);
+  const isEmptyBoard = totalTasks === 0;
 
   useEffect(() => {
     localStorage.setItem(WORKSPACE_STORAGE_KEY, JSON.stringify(workspace));
@@ -561,7 +563,7 @@ export function App() {
   }
 
   return (
-    <main className="app-shell">
+    <main className={cn("app-shell", isEmptyBoard && "empty-state-view")}>
       <section className="app-header">
         <div className="brand-block" ref={brandBlockRef}>
           <h1 className="app-title" ref={appTitleRef}>
