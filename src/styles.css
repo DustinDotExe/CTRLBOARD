@@ -688,6 +688,10 @@ h1 {
   white-space: nowrap;
 }
 
+.sort-trigger-icon {
+  display: none;
+}
+
 .sort-trigger:hover {
   background: var(--muted);
 }
@@ -1014,17 +1018,29 @@ h1 {
   }
 
   .column-header {
-    align-items: stretch;
-    flex-direction: column;
+    align-items: flex-start;
   }
 
   .column-title-row {
-    justify-content: space-between;
+    justify-content: flex-start;
     width: 100%;
   }
 
   .sort-trigger {
-    width: 100%;
+    min-width: 38px;
+    width: 38px;
+    padding: 0;
+    margin-left: auto;
+    justify-content: center;
+  }
+
+  .sort-trigger-label,
+  .sort-trigger-caret {
+    display: none;
+  }
+
+  .sort-trigger-icon {
+    display: inline-flex;
   }
 }
 

@@ -1,4 +1,4 @@
-import { ArrowRightLeft, CalendarDays, Check, ChevronDown, Menu, Pencil, Plus, Trash2, X } from "lucide-react";
+import { ArrowRightLeft, CalendarDays, Check, ChevronDown, Menu, Pencil, Plus, SlidersHorizontal, Trash2, X } from "lucide-react";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Button } from "./components/ui/button";
 import {
@@ -948,25 +948,28 @@ export function App() {
                 <div className="column-title-row">
                   <h2>{column.title}</h2>
                   <span>{board[column.id].length}</span>
+                  <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                      <Button className="sort-trigger" variant="noShadow" type="button" aria-label="Sort tasks">
+                        <span className="sort-trigger-label">{sortMode === "dateAdded" ? "Date added" : "Priority"}</span>
+                        <span className="sort-trigger-icon" aria-hidden="true">
+                          <SlidersHorizontal size={16} strokeWidth={3} />
+                        </span>
+                        <ChevronDown className="sort-trigger-caret" size={16} strokeWidth={3} />
+                      </Button>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent className="sort-menu" align="end">
+                      <DropdownMenuLabel>Sort by</DropdownMenuLabel>
+                      <DropdownMenuSeparator />
+                      <DropdownMenuItem onSelect={() => setSorts((current) => ({ ...current, [column.id]: "dateAdded" }))}>
+                        Date added
+                      </DropdownMenuItem>
+                      <DropdownMenuItem onSelect={() => setSorts((current) => ({ ...current, [column.id]: "priority" }))}>
+                        Priority
+                      </DropdownMenuItem>
+                    </DropdownMenuContent>
+                  </DropdownMenu>
                 </div>
-                <DropdownMenu>
-                  <DropdownMenuTrigger asChild>
-                    <Button className="sort-trigger" variant="noShadow" type="button">
-                      <span>{sortMode === "dateAdded" ? "Date added" : "Priority"}</span>
-                      <ChevronDown size={16} strokeWidth={3} />
-                    </Button>
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent className="sort-menu" align="end">
-                    <DropdownMenuLabel>Sort by</DropdownMenuLabel>
-                    <DropdownMenuSeparator />
-                    <DropdownMenuItem onSelect={() => setSorts((current) => ({ ...current, [column.id]: "dateAdded" }))}>
-                      Date added
-                    </DropdownMenuItem>
-                    <DropdownMenuItem onSelect={() => setSorts((current) => ({ ...current, [column.id]: "priority" }))}>
-                      Priority
-                    </DropdownMenuItem>
-                  </DropdownMenuContent>
-                </DropdownMenu>
               </header>
               <div className="task-list">
                 {sortTasks(board[column.id], sortMode).map((task) => {
